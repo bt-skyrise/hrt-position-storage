@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace HelsinkiRegionTransportPositionStorage.Recorder
 {
-    public record PositionDocument(DateTime Timestamp, string Topic, string AsciiPayload);
+    public record PositionDocument(DateTime Timestamp, string Topic, string Payload);
 
     public class PositionsMongoDbStorage
     {

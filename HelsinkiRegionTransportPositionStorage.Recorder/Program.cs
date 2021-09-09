@@ -6,6 +6,8 @@ using MQTTnet;
 // unbounded, as we don't want to miss any messages in case of transient errors
 var channel = Channel.CreateUnbounded<MqttApplicationMessage>();
 
+ChannelQueueLengthMonitor.Start(channel);
+
 await PositionsMqttClient.Connect(
     messageHandler: async message => await channel.Writer.WriteAsync(message)
 );

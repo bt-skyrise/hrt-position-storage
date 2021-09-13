@@ -13,13 +13,13 @@ namespace HelsinkiRegionTransportPositionStorage.Recorder
         public static async Task Connect(Func<MqttApplicationMessage, Task> messageHandler)
         {
             var mqttClientOptions = new MqttClientOptionsBuilder()
-                .WithClientId("Client1")
+                .WithClientId(null) // do not keep state on the broker
+                .WithCleanSession()
                 .WithTls(new MqttClientOptionsBuilderTlsParameters
                 {
                     UseTls = true,
                     SslProtocol = SslProtocols.Tls12
                 })
-                .WithCleanSession()
                 .WithTcpServer("mqtt.hsl.fi", 8883)
                 .Build();
         

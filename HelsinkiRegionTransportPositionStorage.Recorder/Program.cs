@@ -12,11 +12,11 @@ await PositionsMqttClient.Connect(
     messageHandler: async message => await channel.Writer.WriteAsync(message)
 );
 
-var positionsMongoDbStorage = new PositionsMongoDbStorage();
+var positionsFileStorage = new PositionsFileStorage();
 
 await channel.Reader
     .ReadAllAsync()
-    .Select(PositionMessageMapper.TryMapToDocument)
+    .Select(PositionJsonLineMapper.TryMapToJsonLine)
     .Where(document => document is not null)
     .Buffer(1000)
-    .ForEachAwaitAsync(positionsMongoDbStorage.StoreBatch);
+    .ForEachAwaitAsync(positionsFileStorage.StoreBatch);
